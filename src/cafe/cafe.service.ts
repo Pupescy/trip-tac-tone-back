@@ -6,6 +6,6 @@ export class CafeService {
     constructor(private cafeRepository: CafesRepository){}
 
     async getAll(){
-        return 12//this._cafeService.getAll()
-    }
+        return  this.cafeRepository.getAll()
+    } 
 }

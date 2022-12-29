@@ -1,16 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { db } from "src/config/firebase";
-const cafesCollection = db.collection('Cafes');
+// const cafesCollection = db.collection('Cafes');
+
 
 @Injectable()
+
 export class CafesRepository {
+    private cafesCollection = db.collection('Cafes');
     async getAll() {
-        const col = await cafesCollection.get();
+        const col = await this.cafesCollection.get();
 
         if (col.empty) return []
         else {
             return col.docs.map(doc => {
-                return { id: doc.id, ...doc }
+                const data=doc.data()
+                return { id: doc.id, ...data }
             })
         }
     }
@@ -23,3 +27,4 @@ export class CafesRepository {
 
     }
 }
+
