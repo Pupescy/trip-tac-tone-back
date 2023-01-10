@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { db } from "src/config/firebase";
-// const cafesCollection = db.collection('Cafes');
-
 
 @Injectable()
 
-export class CafesRepository {
-    private cafesCollection = db.collection('Cafes');
+export class MyplansRepository {
+    private myplansCollection = db.collection('MyPlan');
     async getAll() {
-        const col = await this.cafesCollection.get();
+        const col = await this.myplansCollection.get();
 
         if (col.empty) return []
         else {
@@ -27,4 +25,3 @@ export class CafesRepository {
 
     }
 }
-
