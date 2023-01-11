@@ -30,7 +30,15 @@ export class CafesRepository {
     }
 
     async getByName(name: string) {
+        const res = await this.cafesCollection.where('Cafe_Name', '==', name).get();
 
+        if (res.empty) return []
+        else {
+            return res.docs.map(doc => {
+                const data=doc.data()
+                return { id: doc.id, ...data }
+            })
+        }
     }
 }
 

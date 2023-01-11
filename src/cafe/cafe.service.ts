@@ -12,4 +12,8 @@ export class CafeService {
     async getById(id: string){
         return await this.cafeRepository.getById(id)
     }
+
+    async getByName(name: string){
+        return await this.cafeRepository.getByName(name)
+    }
 }
