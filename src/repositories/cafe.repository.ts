@@ -11,8 +11,13 @@ export class CafesRepository {
         if (res.empty) return []
         else {
             return res.docs.map(doc => {
-                const data=doc.data()
-                return { id: doc.id, ...data }
+                const data = doc.data()
+                return {
+                    id: doc.id,
+                    Cafe_Name: data.Cafe_Name,
+                    Cafe_Pic: data.Cafe_Pics[0],
+                    Address: data.Address
+                }
             })
         }
     }
@@ -22,7 +27,7 @@ export class CafesRepository {
 
         if (!res.exists) return null
         else {
-           return {
+            return {
                 id: res.id,
                 ...res.data()
             }
@@ -35,7 +40,7 @@ export class CafesRepository {
         if (res.empty) return []
         else {
             return res.docs.map(doc => {
-                const data=doc.data()
+                const data = doc.data()
                 return { id: doc.id, ...data }
             })
         }
