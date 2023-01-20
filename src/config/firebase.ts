@@ -20,5 +20,6 @@ admin.initializeApp({
 
 const db = admin.firestore();
 const cafesCollection = db.collection('Cafes');
+const myplansCollection = db.collection('CreatePlan');
 
-export { db, cafesCollection }
+export { db, cafesCollection,myplansCollection }
