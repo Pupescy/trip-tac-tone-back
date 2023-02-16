@@ -1,27 +1,40 @@
 import { Injectable } from '@nestjs/common';
-import { db } from "src/config/firebase";
+import { myplansCollection } from "src/config/firebase";
+import { IPlan } from 'src/models/data/myplan.model';
+
 
 @Injectable()
 
 export class MyplansRepository {
-    private myplansCollection = db.collection('MyPlan');
     async getAll() {
-        const col = await this.myplansCollection.get();
+        const res = await myplansCollection.get();
 
-        if (col.empty) return []
+        if (res.empty) return []
         else {
-            return col.docs.map(doc => {
+            return res.docs.map(doc => {
                 const data=doc.data()
-                return { id: doc.id, ...data }
+                return { 
+                    id: doc.id,
+                    Plan_Name: data.Plan_name,
+                    Date: data.Date,
+                    
+                }
             })
         }
     }
 
-    async getById(id: string) {
-
+    async create (data: IPlan){
+        const id = myplansCollection.doc().id
+        const newDoc= {
+            Plan_ID: id,
+            Plan_name: data.name,
+            User_Tone: data.tones,
+            UserStyle: data.style,
+            Date: data.date,
+            Duration: data.duration
+        }
+        await myplansCollection.doc(id).set(newDoc)
+        console.log(`create success: ${id}`)
     }
 
-    async getByName(name: string) {
-
-    }
 }
