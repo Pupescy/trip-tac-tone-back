@@ -6,8 +6,8 @@ import { CafesRepository } from 'src/repositories/cafe.repository';
 export class CafeService {
     constructor(private cafeRepository: CafesRepository){}
 
-    async getAll(){
-        return await this.cafeRepository.getAll()
+    async getAll(getAllDetails: boolean = false){
+        return await this.cafeRepository.getAll(getAllDetails)
     } 
 
     async getById(id: string){
@@ -25,5 +25,13 @@ export class CafeService {
 
     async getCafeFromTonesAndStyle(data: ITonesStyle){
         return await this.cafeRepository.getCafeFromTonesAndStyle(data)
+    }
+
+    async getCafeFromStyleFilter(style: string){
+        return await this.cafeRepository.getCafeFromStyleFilter(style)
+    }
+
+    async getDarkTone(tones: string){
+        return await this.cafeRepository.getDarkTone(tones)
     }
 }

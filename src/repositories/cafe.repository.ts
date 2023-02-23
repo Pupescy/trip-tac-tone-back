@@ -4,19 +4,31 @@ import { ICafe, ITonesStyle } from 'src/models/data/cafe.model';
 
 @Injectable()
 export class CafesRepository {
-    async getAll() {
+    private _mapGetCardDetails(doc: FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>) {
+        const data = doc.data()
+        return {
+            id: doc.id,
+            Cafe_Name: data.Cafe_Name,
+            Cafe_Pic: data.Cafe_Pics[0],
+            Address: data.Address
+        }
+    }
+
+    private _mapGetAllDetails(doc: FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>) {
+        const data = doc.data()
+        return {
+            id: doc.id,
+            ...data
+        }
+    }
+
+    async getAll(getAllDetails: boolean = false) {
         const res = await cafesCollection.get();
 
         if (res.empty) return []
         else {
             return res.docs.map(doc => {
-                const data = doc.data()
-                return {
-                    id: doc.id,
-                    Cafe_Name: data.Cafe_Name,
-                    Cafe_Pic: data.Cafe_Pics[0],
-                    Address: data.Address
-                }
+                return getAllDetails ? this._mapGetAllDetails(doc) : this._mapGetCardDetails(doc)
             })
         }
     }
@@ -44,6 +56,8 @@ export class CafesRepository {
             })
         }
     }
+
+    
 
     async create(data: ICafe) {
         const id = cafesCollection.doc().id
@@ -90,6 +104,40 @@ export class CafesRepository {
             })
         }
         return result
+    }
+
+    async getCafeFromStyleFilter(style: string) {
+        const res = await cafesCollection.where('Style', '==', style).get();
+
+        if (res.empty) return []
+        else {
+            return res.docs.map(doc => {
+                const data = doc.data()
+                return {
+                    id: doc.id,
+                    Cafe_Name: data.Cafe_Name,
+                    Cafe_Pic: data.Cafe_Pics[0],
+                    Address: data.Address
+                }
+            })
+        }
+    }
+    async getDarkTone(tones: string){
+        const res = await cafesCollection.where('Tones', '==', tones).get();
+
+        
+        if (res.empty) return []
+        else {
+            return res.docs.map(doc => {
+                const data = doc.data()
+                return {
+                    id: doc.id,
+                    Cafe_Name: data.Cafe_Name,
+                    Cafe_Pic: data.Cafe_Pics[0],
+                    Address: data.Address
+                }
+            })
+        }
     }
 }
 
