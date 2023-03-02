@@ -11,7 +11,9 @@ export class CafesRepository {
             id: doc.id,
             Cafe_Name: data.Cafe_Name,
             Cafe_Pic: data.Cafe_Pics[0],
-            Address: data.Address
+            Address: data.Address,
+            Tones: data.Tone,
+            Style: data.Style
         }
     }
 
@@ -30,7 +32,7 @@ export class CafesRepository {
         else {
             return res.docs.map(doc => {
                 return getAllDetails ? this._mapGetAllDetails(doc) : this._mapGetCardDetails(doc)
-            })
+            }) as any[]
         }
     }
 
@@ -124,21 +126,8 @@ export class CafesRepository {
         }
     }
     async getTone(tone: string){
-        const res = await cafesCollection.where('Tone', '==', tone).get();
-
-        
-        if (res.empty) return []
-        else {
-            return res.docs.map(doc => {
-                const data = doc.data()
-                return {
-                    id: doc.id,
-                    Cafe_Name: data.Cafe_Name,
-                    Cafe_Pic: data.Cafe_Pics[0],
-                    Address: data.Address
-                }
-            })
-        }
+       const cafes = await this.getAll()
+       return cafes.filter(e => e.Tones?.includes(tone))
     }
 
     // async remove(id: string){
