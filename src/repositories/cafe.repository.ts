@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { cafesCollection } from "src/config/firebase";
 import { ICafe, ITonesStyle } from 'src/models/data/cafe.model';
 
+
 @Injectable()
 export class CafesRepository {
     private _mapGetCardDetails(doc: FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>) {
@@ -122,8 +123,8 @@ export class CafesRepository {
             })
         }
     }
-    async getDarkTone(tones: string){
-        const res = await cafesCollection.where('Tones', '==', tones).get();
+    async getTone(tone: string){
+        const res = await cafesCollection.where('Tone', '==', tone).get();
 
         
         if (res.empty) return []
@@ -139,5 +140,9 @@ export class CafesRepository {
             })
         }
     }
+
+    // async remove(id: string){
+
+    // }
 }
 

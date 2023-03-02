@@ -31,7 +31,11 @@ export class CafeService {
         return await this.cafeRepository.getCafeFromStyleFilter(style)
     }
 
-    async getDarkTone(tones: string){
-        return await this.cafeRepository.getDarkTone(tones)
+    async getTone(tone: string){
+        return await this.cafeRepository.getTone(tone)
     }
+
+    // async remove(id: string){
+
+    // }
 }
