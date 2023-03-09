@@ -6,8 +6,8 @@ import { MyplansRepository } from 'src/repositories/myplan.repository';
 export class MyplanService {
     constructor(private myplanRepository: MyplansRepository){}
 
-    async getAll(){
-        return this.myplanRepository.getAll()
+    async getByuserId(userId: string){
+        return this.myplanRepository.getByuserId(userId)
     }
 
     async create(data: IPlan){

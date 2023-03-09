@@ -6,8 +6,8 @@ import { IPlan } from 'src/models/data/myplan.model';
 @Injectable()
 
 export class MyplansRepository {
-    async getByuserId() {
-        const res = await myplansCollection.where('Myplan.userId', '==','userId' ).get();
+    async getByuserId(userId: string) {
+        const res = await myplansCollection.where('userId', '==', userId ).get();
 
         if (res.empty) return []
         else {

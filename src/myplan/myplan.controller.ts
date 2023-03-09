@@ -7,9 +7,9 @@ import { MyplanService } from './myplan.service';
 export class MyplanController {
     constructor(private _MyplanService:MyplanService){}
 
-    @Get()
-    async getByuserId(){
-        return await this._MyplanService.getAll()
+    @Get(':userId')
+    async getByuserId(@Param() param){
+        return await this._MyplanService.getByuserId(param.userId)
     }
 
     @Post()
