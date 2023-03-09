@@ -37,4 +37,8 @@ export class MyplansRepository {
         console.log(`create success: ${id}`)
     }
 
+    async remove(id: string){
+        await myplansCollection.doc(id).delete();
+    }
+
 }

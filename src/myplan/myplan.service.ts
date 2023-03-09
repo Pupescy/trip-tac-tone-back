@@ -13,4 +13,8 @@ export class MyplanService {
     async create(data: IPlan){
         await this.myplanRepository.create(data);
     }
+
+    async remove(id: string){
+        await this.myplanRepository.remove(id)
+    }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller,Get, Post } from '@nestjs/common';
+import { Body, Controller,Get, Post, Delete, Param } from '@nestjs/common';
 import { ICafe } from 'src/models/data/cafe.model';
 import { IPlan } from 'src/models/data/myplan.model';
 import { MyplanService } from './myplan.service';
@@ -22,6 +22,10 @@ export class MyplanController {
         }
     }
 
-   
+    @Delete(':id')
+    async remove(@Param('id') id: string){
+        await this._MyplanService.remove(id)
+        return `This action removes a #${id} plan`;
+    }
 
 }
