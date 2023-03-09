@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Put,Param, Post, Query } from '@nestjs/common';
 import { ICafe, ITonesStyle } from 'src/models/data/cafe.model';
 import { CafeService } from './cafe.service';
 
@@ -51,13 +51,13 @@ export class CafeController {
 
     @Delete(':id')
     async remove(@Param('id') id: string){
-        // return `This action removes a #${id} cafe`;
-        try {
-            
-        } catch (error) {
-            return error;
-        }
+        await this._cafeService.remove(id)
+        return `This action removes a #${id} cafe`;
     }
 
-
+    @Put(':id')
+    async update(@Param('id') id:string ,@Body() data: any){
+        await this._cafeService.update(id, data)
+        return `This action updates a #${id} cafe`;
+    }
 }

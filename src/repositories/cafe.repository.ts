@@ -130,8 +130,12 @@ export class CafesRepository {
        return cafes.filter(e => e.Tones?.includes(tone))
     }
 
-    // async remove(id: string){
+    async remove(id: string){
+        await cafesCollection.doc(id).delete();
+    }
 
-    // }
+    async update(id: string, data: any){
+        await cafesCollection.doc(id).update(data)
+    }
 }
 

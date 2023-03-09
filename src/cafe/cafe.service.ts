@@ -35,7 +35,11 @@ export class CafeService {
         return await this.cafeRepository.getTone(tone)
     }
 
-    // async remove(id: string){
+    async remove(id: string){
+        await this.cafeRepository.remove(id)
+    }
 
-    // }
+    async update(id:string, data: any){
+        await this.cafeRepository.update(id, data)
+    }
 }
