@@ -6,8 +6,8 @@ import { IPlan } from 'src/models/data/myplan.model';
 @Injectable()
 
 export class MyplansRepository {
-    async getAll() {
-        const res = await myplansCollection.get();
+    async getByuserId() {
+        const res = await myplansCollection.where('Myplan.userId', '==','userId' ).get();
 
         if (res.empty) return []
         else {
@@ -17,6 +17,7 @@ export class MyplansRepository {
                     id: doc.id,
                     Plan_Name: data.Plan_name,
                     Date: data.Date,
+                    userId: data.userId
                     
                 }
             })
@@ -31,7 +32,8 @@ export class MyplansRepository {
             User_Tone: data.tones,
             UserStyle: data.style,
             Date: data.date,
-            Duration: data.duration
+            Duration: data.duration,
+            userId: data.userId
         }
         await myplansCollection.doc(id).set(newDoc)
         console.log(`create success: ${id}`)

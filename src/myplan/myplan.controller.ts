@@ -8,7 +8,7 @@ export class MyplanController {
     constructor(private _MyplanService:MyplanService){}
 
     @Get()
-    async getAll(){
+    async getByuserId(){
         return await this._MyplanService.getAll()
     }
 
