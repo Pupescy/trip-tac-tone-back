@@ -1,4 +1,6 @@
 import admin from "firebase-admin";
+import { getStorage } from "firebase/storage";
+import { initializeApp } from "firebase/app";
 
 const serviceAccount: any = {
   "type": "service_account",
@@ -13,13 +15,24 @@ const serviceAccount: any = {
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-4wmcy%40trip-tac-tone.iam.gserviceaccount.com"
 }
 
+const firebaseConfig = {
+  storageBucket: 'gs://trip-tac-tone.appspot.com'
+};
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
+
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://trip-tac-tone-default-rtdb.asia-southeast1.firebasedatabase.app"
+  // storageBucket: 'gs://trip-tac-tone.appspot.com'
 });
+
+
 
 const db = admin.firestore();
 const cafesCollection = db.collection('Cafes');
 const myplansCollection = db.collection('CreatePlan');
 
-export { db, cafesCollection,myplansCollection }
+export { db, cafesCollection,myplansCollection,storage }

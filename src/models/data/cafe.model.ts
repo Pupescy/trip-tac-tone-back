@@ -20,4 +20,5 @@ export interface IOpenClose {
 export interface ITonesStyle{
     tones?: string[];
     style?: string;
+    photogenic_time?: number;
 }

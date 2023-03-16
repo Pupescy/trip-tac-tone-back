@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UploadedFile } from '@nestjs/common';
 import { cafesCollection } from "src/config/firebase";
 import { ICafe, ITonesStyle } from 'src/models/data/cafe.model';
+import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "src/config/firebase";
 
 
 @Injectable()
@@ -85,6 +87,9 @@ export class CafesRepository {
         if (data.style) {
             cafesCol = cafesCol.where("Style", '==', data.style)
         }
+        if (data.photogenic_time > 0) {
+            cafesCol = cafesCol.where("Photogenic_Time", '==', data.photogenic_time)
+        }
         const res = await cafesCol.get()
         let result = res.docs.map(doc => {
             const data = doc.data()
@@ -94,7 +99,8 @@ export class CafesRepository {
                 Cafe_Pic: data.Cafe_Pics,
                 Address: data.Address,
                 Style: data.Style,
-                Tone: data.Tone
+                Tone: data.Tone,
+                photogenic_time:data.Photogenic_Time
             }
         })
         if (data.tones && data.tones.length) {
@@ -136,6 +142,27 @@ export class CafesRepository {
 
     async update(id: string, data: any){
         await cafesCollection.doc(id).update(data)
+    }
+
+    async upload(cafe_pics: string, data:any){
+        // // console.log('1234')
+        // const storageRef = ref(storage, '/image');
+        // const uploadTask = uploadBytesResumable(storageRef,data);
+        // uploadTask.on('state_changed', 
+        // (snapshot) => {
+        //   // Observe state change events such as progress, pause, and resume
+        //   // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        //   const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        //   console.log('Upload is ' + progress + '% done');
+        //   switch (snapshot.state) {
+        //     case 'paused':
+        //       console.log('Upload is paused');
+        //       break;
+        //     case 'running':
+        //       console.log('Upload is running');
+        //       break;
+        //   }
+        // })
     }
 }
 

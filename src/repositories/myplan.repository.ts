@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { myplansCollection } from "src/config/firebase";
+import { cafesCollection } from 'src/config/firebase';
 import { IPlan } from 'src/models/data/myplan.model';
 
 
@@ -37,10 +38,16 @@ export class MyplansRepository {
         }
         await myplansCollection.doc(id).set(newDoc)
         console.log(`create success: ${id}`)
+        return id;
     }
 
     async remove(id: string){
         await myplansCollection.doc(id).delete();
+    }
+
+    async  getSuggestPlan(id: string){
+        
+       return (await myplansCollection.doc(id).get()).data()
     }
 
 }

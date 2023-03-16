@@ -42,4 +42,8 @@ export class CafeService {
     async update(id:string, data: any){
         await this.cafeRepository.update(id, data)
     }
+
+    async upload(cafe_pics:string, data:any){
+        await this.cafeRepository.upload(cafe_pics,data)
+    }
 }
