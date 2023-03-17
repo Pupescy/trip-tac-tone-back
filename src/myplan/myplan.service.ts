@@ -33,7 +33,8 @@ export class MyplanService {
             timeNum.push(time)
         }
 
-        if (timeNum[0] >= 8.00 && timeNum[0] < 10.00) { photoTime.push(1) }
+        if((timeNum[0]<8.00 && timeNum[1]>8.00)|| (timeNum[0] >= 8.00 && timeNum[0] < 10.00)) { photoTime.push(1) }
+        // if (timeNum[0] >= 8.00 && timeNum[0] < 10.00) { photoTime.push(1) }
         if (timeNum[0] < 14.00 && timeNum[1] > 11.00) { photoTime.push(2) }
         if (timeNum[0] < 17.00 && timeNum[1] > 15.00) { photoTime.push(3) }
 
