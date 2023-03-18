@@ -66,7 +66,7 @@ export class CafesRepository {
 
     async create(data: ICafe) {
         const id = cafesCollection.doc().id
-        const newDoc = {
+        let newDoc = {
             Cafe_ID: id,
             Cafe_Name: data.name,
             Cafe_Pics: data.cafe_pics,
@@ -78,6 +78,23 @@ export class CafesRepository {
             Color: data.color,
             openClose: data.openclose
         }
+
+        const converted = []
+        for(const timeInfo of newDoc.openClose){
+            for(const days of timeInfo.day){
+                const _d = {
+                    open: timeInfo.open,
+                    close: timeInfo.close,
+                    day: days
+                }
+                converted.push(_d)
+            }
+
+            console.log(converted)
+        }
+
+        newDoc.openClose = converted
+
         await cafesCollection.doc(id).set(newDoc)
         console.log(`create success: ${id}`)
     }
