@@ -76,7 +76,7 @@ export class CafesRepository {
             Style: data.style,
             Photogenic_Time: data.photogenic_time,
             Color: data.color,
-            OpenClose: data.openclose
+            openClose: data.openclose
         }
         await cafesCollection.doc(id).set(newDoc)
         console.log(`create success: ${id}`)
