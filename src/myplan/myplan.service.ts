@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { IPlan } from 'src/models/data/myplan.model';
-import { MyplansRepository } from 'src/repositories/myplan.repository';
-import { CafesRepository } from 'src/repositories/cafe.repository';
-import { ITonesStyle } from 'src/models/data/cafe.model';
-import { doc } from 'prettier';
 import { cafesCollection } from 'src/config/firebase';
+import { ITonesStyle } from 'src/models/data/cafe.model';
+import { IPlan } from 'src/models/data/myplan.model';
+import { CafesRepository } from 'src/repositories/cafe.repository';
+import { MyplansRepository } from 'src/repositories/myplan.repository';
+
 
 @Injectable()
 export class MyplanService {
@@ -38,18 +38,20 @@ export class MyplanService {
         if (timeNum[0] < 14.00 && timeNum[1] > 11.00) { photoTime.push(2) }
         if (timeNum[0] < 17.00 && timeNum[1] > 15.00) { photoTime.push(3) }
 
-        let result = [];
+        let result= [];
         for (const time of photoTime) {
             const filter: ITonesStyle = {
                 style: plan.UserStyle,
                 tones: plan.User_Tone,
                 photogenic_time: time
             }
+
+        
             const cafe = await this.cafeRepository.getCafeFromTonesAndStyle(filter)
             result = [... result, ... cafe]
         }
 
-        return result
+        return {cafe:result,plan}
     }
 
 

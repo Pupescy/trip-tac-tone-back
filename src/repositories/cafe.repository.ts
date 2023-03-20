@@ -79,21 +79,21 @@ export class CafesRepository {
             openClose: data.openclose
         }
 
-        const converted = []
-        for(const timeInfo of newDoc.openClose){
-            for(const days of timeInfo.day){
-                const _d = {
-                    open: timeInfo.open,
-                    close: timeInfo.close,
-                    day: days
-                }
-                converted.push(_d)
-            }
+        // const converted = []
+        // for(const timeInfo of newDoc.openClose){
+        //     for(const days of timeInfo.day){
+        //         const _d = {
+        //             open: timeInfo.open,
+        //             close: timeInfo.close,
+        //             day: days
+        //         }
+        //         converted.push(_d)
+        //     }
 
-            console.log(converted)
-        }
+        //     console.log(converted)
+        // }
 
-        newDoc.openClose = converted
+        // newDoc.openClose = converted
 
         await cafesCollection.doc(id).set(newDoc)
         console.log(`create success: ${id}`)
@@ -129,6 +129,7 @@ export class CafesRepository {
                 return false
             })
         }
+        
         return result
     }
 
@@ -143,7 +144,13 @@ export class CafesRepository {
                     id: doc.id,
                     Cafe_Name: data.Cafe_Name,
                     Cafe_Pic: data.Cafe_Pics[0],
-                    Address: data.Address
+                    Address: data.Address,
+                    Style:data.Style,
+                    Tone:data.Tone,
+                    Photogenic_Time:data.Photogenic_Time,
+                    Detail:data.Detail,
+                    Color:data.Color,
+                    openClose:data.openClose
                 }
             })
         }
@@ -161,25 +168,7 @@ export class CafesRepository {
         await cafesCollection.doc(id).update(data)
     }
 
-    async upload(cafe_pics: string, data:any){
-        // // console.log('1234')
-        // const storageRef = ref(storage, '/image');
-        // const uploadTask = uploadBytesResumable(storageRef,data);
-        // uploadTask.on('state_changed', 
-        // (snapshot) => {
-        //   // Observe state change events such as progress, pause, and resume
-        //   // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        //   const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        //   console.log('Upload is ' + progress + '% done');
-        //   switch (snapshot.state) {
-        //     case 'paused':
-        //       console.log('Upload is paused');
-        //       break;
-        //     case 'running':
-        //       console.log('Upload is running');
-        //       break;
-        //   }
-        // })
-    }
+   
+    
 }
 

@@ -61,11 +61,7 @@ export class CafeController {
         return `This action updates a #${id} cafe`;
     }
 
-    @Post('/uploadpic')
-    async upload(@UploadedFile() cafe_pics:string, @Body() data: any){
-        await this._cafeService.upload(cafe_pics,data)
-        return 'Upload picture successful!'
-    }
+   
 
     
 }

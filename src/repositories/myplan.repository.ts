@@ -16,7 +16,7 @@ export class MyplansRepository {
                 const data=doc.data()
                 return { 
                     id: doc.id,
-                    Plan_Name: data.Plan_name,
+                    Plan_Name: data.Plan_Name,
                     Date: data.Date,
                     userId: data.userId
                     
@@ -29,7 +29,7 @@ export class MyplansRepository {
         const id = myplansCollection.doc().id
         const newDoc= {
             Plan_ID: id,
-            Plan_name: data.name,
+            Plan_Name: data.name,
             User_Tone: data.tones,
             UserStyle: data.style,
             Date: data.date,
