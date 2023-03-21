@@ -42,4 +42,6 @@ export class CafeService {
     async update(id:string, data: any){
         await this.cafeRepository.update(id, data)
     }
+
+   
 }

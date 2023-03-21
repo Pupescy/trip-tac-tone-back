@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Put,Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Put, Param, Post, Query, UploadedFile } from '@nestjs/common';
 import { ICafe, ITonesStyle } from 'src/models/data/cafe.model';
 import { CafeService } from './cafe.service';
 
@@ -25,7 +25,7 @@ export class CafeController {
     }
 
     @Get('tone/:tone')
-    async getTone(@Param() param){
+    async getTone(@Param() param) {
         return await this._cafeService.getTone(param.tone)
     }
 
@@ -50,14 +50,18 @@ export class CafeController {
     }
 
     @Delete(':id')
-    async remove(@Param('id') id: string){
+    async remove(@Param('id') id: string) {
         await this._cafeService.remove(id)
         return `This action removes a #${id} cafe`;
     }
 
     @Put(':id')
-    async update(@Param('id') id:string ,@Body() data: any){
+    async update(@Param('id') id: string, @Body() data: any) {
         await this._cafeService.update(id, data)
         return `This action updates a #${id} cafe`;
     }
+
+   
+
+    
 }

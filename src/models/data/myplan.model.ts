@@ -5,4 +5,5 @@ export interface IPlan{
     style: string;
     date: string;
     duration: string[];
+    userId: string
 }

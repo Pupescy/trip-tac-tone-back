@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UploadedFile } from '@nestjs/common';
 import { cafesCollection } from "src/config/firebase";
 import { ICafe, ITonesStyle } from 'src/models/data/cafe.model';
+import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "src/config/firebase";
 
 
 @Injectable()
@@ -64,7 +66,7 @@ export class CafesRepository {
 
     async create(data: ICafe) {
         const id = cafesCollection.doc().id
-        const newDoc = {
+        let newDoc = {
             Cafe_ID: id,
             Cafe_Name: data.name,
             Cafe_Pics: data.cafe_pics,
@@ -74,8 +76,25 @@ export class CafesRepository {
             Style: data.style,
             Photogenic_Time: data.photogenic_time,
             Color: data.color,
-            OpenClose: data.openclose
+            openClose: data.openclose
         }
+
+        // const converted = []
+        // for(const timeInfo of newDoc.openClose){
+        //     for(const days of timeInfo.day){
+        //         const _d = {
+        //             open: timeInfo.open,
+        //             close: timeInfo.close,
+        //             day: days
+        //         }
+        //         converted.push(_d)
+        //     }
+
+        //     console.log(converted)
+        // }
+
+        // newDoc.openClose = converted
+
         await cafesCollection.doc(id).set(newDoc)
         console.log(`create success: ${id}`)
     }
@@ -84,6 +103,9 @@ export class CafesRepository {
         let cafesCol: any = cafesCollection
         if (data.style) {
             cafesCol = cafesCol.where("Style", '==', data.style)
+        }
+        if (data.photogenic_time > 0) {
+            cafesCol = cafesCol.where("Photogenic_Time", '==', data.photogenic_time)
         }
         const res = await cafesCol.get()
         let result = res.docs.map(doc => {
@@ -94,7 +116,11 @@ export class CafesRepository {
                 Cafe_Pic: data.Cafe_Pics,
                 Address: data.Address,
                 Style: data.Style,
-                Tone: data.Tone
+                Tone: data.Tone,
+                photogenic_time:data.Photogenic_Time,
+                Detail:data.Detail,
+                openClose:data.openClose,
+                Color:data.Color
             }
         })
         if (data.tones && data.tones.length) {
@@ -106,6 +132,7 @@ export class CafesRepository {
                 return false
             })
         }
+        
         return result
     }
 
@@ -120,7 +147,13 @@ export class CafesRepository {
                     id: doc.id,
                     Cafe_Name: data.Cafe_Name,
                     Cafe_Pic: data.Cafe_Pics[0],
-                    Address: data.Address
+                    Address: data.Address,
+                    Style:data.Style,
+                    Tone:data.Tone,
+                    Photogenic_Time:data.Photogenic_Time,
+                    Detail:data.Detail,
+                    Color:data.Color,
+                    openClose:data.openClose
                 }
             })
         }
@@ -137,5 +170,8 @@ export class CafesRepository {
     async update(id: string, data: any){
         await cafesCollection.doc(id).update(data)
     }
+
+   
+    
 }
 
