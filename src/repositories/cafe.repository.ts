@@ -117,7 +117,9 @@ export class CafesRepository {
                 Address: data.Address,
                 Style: data.Style,
                 Tone: data.Tone,
-                photogenic_time:data.Photogenic_Time
+                photogenic_time:data.Photogenic_Time,
+                Detail:data.Detail,
+                openClose:data.openClose
             }
         })
         if (data.tones && data.tones.length) {
