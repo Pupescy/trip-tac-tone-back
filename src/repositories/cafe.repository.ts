@@ -119,7 +119,8 @@ export class CafesRepository {
                 Tone: data.Tone,
                 photogenic_time:data.Photogenic_Time,
                 Detail:data.Detail,
-                openClose:data.openClose
+                openClose:data.openClose,
+                Color:data.Color
             }
         })
         if (data.tones && data.tones.length) {
